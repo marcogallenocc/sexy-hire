@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/marcogallenocc/sexy-hire#readme",
   "devDependencies": {
-    "light-server": "^1.1.7",
     "lite-server": "^2.2.2"
   },
   "dependencies": {
