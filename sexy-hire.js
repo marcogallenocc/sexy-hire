@@ -35,9 +35,9 @@ app.get('/confirma-datos',function(req,res){
 	res.render('confirma_datos');
 });
 
-var server = app.listen(8081,function(){
+var server = app.listen(80, function(){
 	var host = server.address().address;
 	var port = server.address().port;
 
-	console.log("Example app listening at http://%s:%s", host, port);
+	console.log("Example app listening at http:// %s:%s", host, port);
 })
