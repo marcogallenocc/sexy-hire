@@ -1,8 +1,5 @@
 var express = require('express');
 var app = express();
-
-
-
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.engine('handlebars', handlebars.engine);
@@ -10,10 +7,6 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine','handlebars');
 
 app.use(express.static(__dirname + '/public'));
-
-app.get('/',function(req,res){
-	res.render('index');
-});
 
 app.get('/',function(req,res){
 	res.render('index');
@@ -39,5 +32,5 @@ var server = app.listen(80, function(){
 	var host = server.address().address;
 	var port = server.address().port;
 
-	console.log("Example app listening at http:// %s:%s", host, port);
+	console.log("Example app listening at http://%s:%s", host, port);
 })
