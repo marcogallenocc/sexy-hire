@@ -1,0 +1,24 @@
+{
+  "name": "sexy-hire",
+  "version": "1.0.0",
+  "description": "Sexy hire hackatocc project",
+  "main": "sexy-hire.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcogallenocc/sexy-hire.git"
+  },
+  "author": "Max Hurtado, Liliana Guillen, David Mendieta, Marlein anaya, Marco Gallen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcogallenocc/sexy-hire/issues"
+  },
+  "homepage": "https://github.com/marcogallenocc/sexy-hire#readme",
+  "devDependencies": {
+    "light-server": "^1.1.7",
+    "lite-server": "^2.2.2"
+  }
+}
