@@ -4,10 +4,7 @@ var express = require('express');
 var request = require('request');
 var ig = require('instagram-node').instagram();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-
 var app = express();
-
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var firebase = require('firebase');
 var fbaseconfig = {
     apiKey: "AIzaSyBym9z15u1SyHDI8fBZzdqeNQ2j1Nv4s4g",
