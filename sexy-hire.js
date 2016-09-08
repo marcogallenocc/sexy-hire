@@ -7,7 +7,6 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 var app = express();
 
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var firebase = require('firebase');
 var fbaseconfig = {
     apiKey: "AIzaSyBym9z15u1SyHDI8fBZzdqeNQ2j1Nv4s4g",
@@ -45,9 +44,7 @@ exports.handleauth = function(req,res){
 
 		    request(url, function(err, response, body){
 		        var imgs = JSON.parse(body);
-		        console.log(imgs.data[0].images.thumbnail.url);
 		        var data = imgs.data;
-		        var thumbnail = imgs.data[0].images.thumbnail.url;
 		        res.render('insta_conectado', {datum: data});
 		    });
 		}
@@ -67,6 +64,15 @@ app.get('/login',function(req,res){
 	res.render('login');
 });
 
+app.get('/validate',function(req,res){
+
+	/***
+		TODO: VALIDAR AL USUARIO QUE EXISTA EN LA BD SI NO CREARLO Y PONERLE SUS DATOS Y METERLO EN SESSION	
+
+
+	***/
+	res.send("validado hijo de la morning");
+});
 
 app.get('/selector',function(req,res){
 	res.render('selector');

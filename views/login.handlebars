@@ -7,15 +7,18 @@
 	
 
 	$("#fb_login").on("click",function(e){
-		console.log(firebase.auth().signInWithPopup(provider));
-		
+		//console.log(firebase.auth().signInWithPopup(provider));
+		var user = null;
 		firebase.auth().signInWithPopup(provider).then(function(result) {
 			console.log("Hello Result: " + result);
 		  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 		  var token = result.credential.accessToken;
 		  // The signed-in user info.
-		  var user = result.user;
+		  user = result.user;
 		  // ...
+		  window.location.href= "/validate";
+		  
+
 		}).catch(function(error) {
 		  // Handle Errors here.
 		  var errorCode = error.code;
@@ -26,6 +29,9 @@
 		  var credential = error.credential;
 		  // ...
 		});
+
+		 
+
 	});
 
 	</script>
