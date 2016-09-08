@@ -3,7 +3,25 @@
 var express = require('express');
 var request = require('request');
 var ig = require('instagram-node').instagram();
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var handlebars = require('express-handlebars').create({defaultLayout:'main',
+	helpers: {
+		section: function(name, options){
+			if(!this._sections)this._sections = {};
+			this._sections[name] = options.fn(this);
+			return null;
+		}
+	}
+});
+var bodyParser = require('body-parser');
+
+var Api500px = require('api_500px');
+
+var api = new Api500px ({
+      key: 'TvxvhnxFeDoHLwtYVRytzLunjbJLTqljIY2MJs4F',
+      secret: 'YHfIWM99itAaJaOrnXnyPYJy1AiQL5kHxcPOIIvJ',
+      callback: 'http://localhost/handleAuthorize500px'
+    });
+
 var app = express();
 var firebase = require('firebase');
 var fbaseconfig = {
@@ -14,11 +32,13 @@ var fbaseconfig = {
   };
 var fbase = firebase.initializeApp(fbaseconfig);
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extend: true}));
 //Sistema de templates
 app.engine('handlebars', handlebars.engine);
 
 app.set('view engine','handlebars');
+
 
 
 /** INSTAGRAM ***/
@@ -34,7 +54,7 @@ exports.authorize_user = function(req, res){
 exports.handleauth = function(req,res){
 	ig.authorize_user(req.query.code,redirect_uri, function(err, result){
 		if(err){
-			console.log(err.body);
+			//console.log(err.body);
 			res.send("Fuckity fuckity foo");
 		} else {
 			console.log(result.access_token);
@@ -48,6 +68,39 @@ exports.handleauth = function(req,res){
 		}
 	});
 };
+
+/*****
+500PX 
+*****/
+exports.authorize500px = function(req,res){
+	api.authRequest(function(err, authToken, authSecret, results)
+	{
+	  if (err){
+	  	res.send(err);
+	  };
+
+	  //res.send('https://api.500px.com/v1/oauth/authorize?oauth_token='+authToken);
+	  // redirect client to OAuth page
+	  res.redirect('https://api.500px.com/v1/oauth/authorize?oauth_token='+authToken);
+	  //callback(null, 'https://api.500px.com/v1/oauth/authorize?oauth_token='+authToken);
+	});
+}
+
+exports.handleAuthorize500px = function(req,res){
+	api.getAccessToken('api_500px_auth_verifier_token', function(err, accessToken, accessSecret, results)
+		{
+		  if (err) {
+		  	//console.log(err.body);
+		  	res.send(err);
+		  };
+
+		  // access token's been stored within the api instance as well
+		  //callback(null, {status: 'ready'});
+
+		  //res.render('500_conectado');
+		  res.send(accessToken);
+		});
+}
 
 /*** ROUTING ***/
 //Ruta de archivos estaticos
@@ -86,13 +139,18 @@ app.get('/validate',function(req,res){
 	//	console.log('No estas logueado');
 	//	window.location.href= "/"
 	//	}
-	//});
-		
+	//});		
 	res.send("validado hijo de la morning");
 });
 
 app.get('/selector',function(req,res){
 	res.render('selector');
+});
+
+app.post('/selector',function(req,res){
+
+	res.send(req.body);
+	
 });
 
 app.get('/crear-book',function(req,res){
@@ -103,6 +161,16 @@ app.get('/acerca-de-ti',function(req,res){
 	res.render('acerca_de_ti');
 });
 
+app.post('/acerca-de-ti',function(req,res){
+
+	/***
+	TODO: Agregar a la base de datos req.body.presentacion 
+	***/
+	//res.send(req.body.presentacion);
+	res.redirect('/confirma-datos');
+	//res.render('acerca_de_ti');
+});
+
 app.get('/confirma-datos',function(req,res){
 	res.render('confirma_datos');
 });
@@ -110,11 +178,22 @@ app.get('/confirma-datos',function(req,res){
 
 //INSTAGRAM AUTH USER & GET TOKEN 
 app.get('/authorize_user', exports.authorize_user);
+
 app.get('/handleauth', exports.handleauth);
+
+/// 500PX URLS
+app.get('/authorize-500px', exports.authorize500px);
+
+app.get('/handleAuthorize500px', exports.handleAuthorize500px);
+
 
 app.get('/logout',function(req,res){
 	fbase.auth().signOut().then(function() {
 	  console.log("logout exitoso.");
+
+	  /*********
+		IMPLEMENTAR REDIRECT A HOME!
+	  ****////////
 	  res.send("Estas afuera  :)");
 	}, function(error) {
 	  // An error happened.
@@ -126,5 +205,6 @@ var server = app.listen(80, function(){
 	var host = server.address().address;
 	var port = server.address().port;
 
+	
 	console.log("Example app listening at http://%s:%s", host, port);
 })
