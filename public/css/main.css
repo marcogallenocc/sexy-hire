@@ -4,19 +4,166 @@
    Author's custom styles
    ========================================================================== */
 
+   @import url(http://fonts.googleapis.com/css?family=Raleway:400,300|Open+Sans+Condensed:300);
+
+body {
+	background: url(../img/fondo51.jpg) 50% 0 fixed no-repeat;
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;   
+}
+
+#bloque-img2 { /*imagen 2 (abajo)*/
+    /*background: url(../images/fondo5.jpg) fixed no-repeat;*/
+    background-size:100%;
+	width:100%;
+    height: 400px;
+    padding: 100px 0;
+}
+
+#bloque-img2 img { /*imagen 2 (abajo)*/
+	width:100%;
+}
+
+
+h1{ /*titulo*/
+width: 40%;
+height: 60px;
+background-color:#ff6666;
+    font-size: 49px;
+	color:#FFF !important;
+	font-family: 'Raleway', sans-serif !important;
+	margin: 100px 40% 0 20% !important;
+	padding: 10px 10px;
+}
+
+.hnegro { /*titulo*/
+width: 40%;
+height: 60px;
+background-color:#000;
+text-align:right;
+    font-size: 49px;
+	color:#FFF !important;
+	font-family: 'Raleway', sans-serif !important;
+	margin: 0 20% 0 40% !important;
+	padding: 10px 50px;
+}
+
+
+footer{
+	background-color:#333333;
+	width:100%;
+	color:#FFFFFF;
+	font-family: 'Raleway', sans-serif;
+	
+}
+
+.t{
+	margin: 30px 0;
+}
+
+.modulo{	
+width:70%;
+	float:left;
+	text-align:left;
+    font-family: 'Raleway', sans-serif;
+	margin:20px 10% 30px 20%;
+
+}
+
+.modulo img{	
+	float:left;
+	margin-right:20px;
+	
+}
+
+.izq{
+	width:70%;
+	float:left;
+	list-style:none;
+	text-decoration:none;
+	text-align:left;
+    font-family: 'Raleway', sans-serif;
+	margin-top:30px;
+
+}
+
+.droite{
+	width:30%;
+	float:left;
+	list-style:none;
+	text-decoration:none;
+	text-align:right;
+	padding-right:20%;
+	margin-top:30px;
+
+
+}
+
+ul {
+	list-style:none;
+	text-decoration:none;
+}
+
+ul li {
+	height:25px;
+}
+
+.line{
+	width:60%;
+	height:1px;
+	margin: 30px 20%;
+	float:left;
+	background-color:#FFFAFA;
+}
+
+
+.face, 
+.inst, 
+.quinientos {
+	width:33.3%;
+	float:left;
+}
+
+.noir{
+	width:100%;
+	background-color: #000000;
+	height:40px;	
+	margin-top: 50px;
+	text-align:center;
+	padding-top:10px;
+}
 
 
 
 
+@media screen and (max-width:2500px){
+
+#bloque-img2 {
+
+  height: 550px;
+
+}
+}
 
 
+@media screen and (max-width:400px){
+	
+#bloque-img2 {
+  height: 400px;
+}
+
+h1{ /*titulo*/
+width: 83%;
+	margin: 50px 15% 0 5% !important;
+	padding: 10px 10px;
+}
+
+.hnegro { /*titulo*/
+width: 83%;
+	margin: 0 5% 0 15% !important;
+}
 
 
-
-
-
-
-
-
-
+}
 

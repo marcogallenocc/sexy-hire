@@ -21,6 +21,8 @@
     "lite-server": "^2.2.2"
   },
   "dependencies": {
+    "500px": "^0.5.1",
+    "api_500px": "0.0.3",
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
