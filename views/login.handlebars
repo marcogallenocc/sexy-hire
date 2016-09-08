@@ -1,21 +1,28 @@
 <h1>Login</h1>
 <p>Logueate chingon con Facebook Index modificado</p>
 <button id="fb_login" class="btn success">Logueate mi rey con Facebook</button>
+<form id="validate" action="/validate">
+	<input type="hidden" id="h_user" name="h_user" value="">
+	<input type="hidden" id="h_uid" name="h_uid" value="">
+</form>
 
 <script type="text/javascript">
 	var provider = new firebase.auth.FacebookAuthProvider();
 	
 
 	$("#fb_login").on("click",function(e){
-		console.log(firebase.auth().signInWithPopup(provider));
-		
+		//console.log(firebase.auth().signInWithPopup(provider));
+		var user = null;
 		firebase.auth().signInWithPopup(provider).then(function(result) {
-			console.log("Hello Result: " + result);
 		  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-		  var token = result.credential.accessToken;
+		  var token = result.credential.accessToken;		  
 		  // The signed-in user info.
-		  var user = result.user;
-		  // ...
+		  user = result.user;
+		  console.log(user);
+		  $("#h_user").val(user.displayName);
+		  $("#h_uid").val(user.uid);
+		  $("#validate").submit();
+					  
 		}).catch(function(error) {
 		  // Handle Errors here.
 		  var errorCode = error.code;
@@ -26,6 +33,9 @@
 		  var credential = error.credential;
 		  // ...
 		});
+
+		 
+
 	});
 
 	</script>

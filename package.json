@@ -4,7 +4,7 @@
   "description": "Sexy hire hackatocc project",
   "main": "sexy-hire.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha --reporter spec",
     "dev": "lite-server"
   },
   "repository": {
@@ -22,11 +22,14 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "firebase": "^3.3.1",
     "instagram-node": "^0.5.8",
+    "mocha": "^3.0.2",
     "multer": "^1.2.0"
   }
 }

@@ -42,9 +42,7 @@ exports.handleauth = function(req,res){
 
 		    request(url, function(err, response, body){
 		        var imgs = JSON.parse(body);
-		        console.log(imgs.data[0].images.thumbnail.url);
 		        var data = imgs.data;
-		        var thumbnail = imgs.data[0].images.thumbnail.url;
 		        res.render('insta_conectado', {datum: data});
 		    });
 		}
@@ -64,6 +62,34 @@ app.get('/login',function(req,res){
 	res.render('login');
 });
 
+app.get('/validate',function(req,res){
+	var user = req.param('h_user');
+	var uid = req.param('h_uid');	
+	var ref = new firebase("https://sexy-hire.firebaseio.com");
+	var db = ref.database();	
+	
+	var usuario = db.child("users");
+	
+	 //En firebase
+	usuario(uid).once('value', function(snapshot) {
+		console.log(snapshot.val());
+	});
+	//console.log(usuario);
+	//res.send(usuario);
+	//fbase.auth().onAuthStateChanged(function(user) {
+	//	if (user) {
+	//	uid = user.Id;
+	//	console.log("user: " + uid);
+	//	window.location.href= "/crear_book"
+	//	} else {
+	//	console.log("user: " + uid);
+	//	console.log('No estas logueado');
+	//	window.location.href= "/"
+	//	}
+	//});
+		
+	res.send("validado hijo de la morning");
+});
 
 app.get('/selector',function(req,res){
 	res.render('selector');
