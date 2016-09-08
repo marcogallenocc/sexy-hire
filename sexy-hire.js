@@ -7,6 +7,16 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 var app = express();
 
+var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var firebase = require('firebase');
+var fbaseconfig = {
+    apiKey: "AIzaSyBym9z15u1SyHDI8fBZzdqeNQ2j1Nv4s4g",
+    authDomain: "sexy-hire.firebaseapp.com",
+    databaseURL: "https://sexy-hire.firebaseio.com",
+    storageBucket: "sexy-hire.appspot.com",
+  };
+var fbase = firebase.initializeApp(fbaseconfig);
+
 
 //Sistema de templates
 app.engine('handlebars', handlebars.engine);
@@ -52,9 +62,11 @@ app.get('/',function(req,res){
 	res.render('index');
 });
 
+
 app.get('/login',function(req,res){
 	res.render('login');
 });
+
 
 app.get('/selector',function(req,res){
 	res.render('selector');
@@ -72,13 +84,24 @@ app.get('/confirma-datos',function(req,res){
 	res.render('confirma_datos');
 });
 
+
 //INSTAGRAM AUTH USER & GET TOKEN 
 app.get('/authorize_user', exports.authorize_user);
 app.get('/handleauth', exports.handleauth);
+
+app.get('/logout',function(req,res){
+	fbase.auth().signOut().then(function() {
+	  console.log("logout exitoso.");
+	  res.send("Estas afuera  :)");
+	}, function(error) {
+	  // An error happened.
+	});	
+});
+
 
 var server = app.listen(80, function(){
 	var host = server.address().address;
 	var port = server.address().port;
 
-	console.log("Example app listening at http:// %s:%s", host, port);
+	console.log("Example app listening at http://%s:%s", host, port);
 })
