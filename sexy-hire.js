@@ -1,6 +1,14 @@
 var express = require('express');
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var firebase = require('firebase');
+var fbaseconfig = {
+    apiKey: "AIzaSyBym9z15u1SyHDI8fBZzdqeNQ2j1Nv4s4g",
+    authDomain: "sexy-hire.firebaseapp.com",
+    databaseURL: "https://sexy-hire.firebaseio.com",
+    storageBucket: "sexy-hire.appspot.com",
+  };
+var fbase = firebase.initializeApp(fbaseconfig);
 
 app.engine('handlebars', handlebars.engine);
 
@@ -26,6 +34,15 @@ app.get('/acerca-de-ti',function(req,res){
 
 app.get('/confirma-datos',function(req,res){
 	res.render('confirma_datos');
+});
+
+app.get('/logout',function(req,res){
+	fbase.auth().signOut().then(function() {
+	  console.log("logout exitoso.");
+	  res.send("Estas afuera  :)");
+	}, function(error) {
+	  // An error happened.
+	});	
 });
 
 var server = app.listen(80, function(){
