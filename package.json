@@ -4,6 +4,7 @@
   "description": "Sexy hire hackatocc project",
   "main": "sexy-hire.js",
   "scripts": {
+    "start": "node sexy-hire.js",
     "test": "./node_modules/.bin/mocha --reporter spec",
     "dev": "lite-server"
   },
@@ -35,3 +36,4 @@
     "multer": "^1.2.0"
   }
 }
+
