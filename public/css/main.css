@@ -169,8 +169,12 @@ footer ul li {
 }
 
 .fotoperfil{
-	width:30%;
-	margin: 0 35% 0 35%;
+	width:40%;
+	margin: 0 30% 0 30%;
+}
+
+.fotoperfil img{
+	border-radius: 50%;
 }
 
 
@@ -267,8 +271,9 @@ h2{
 
 .descripcion{
 	/*width:80%;
-	margin: 40px 10%;*/
-	border:rgba(255,255,255,1.00) solid 1px; 
+	margin: 40px 10%;
+	border:rgba(255,255,255,1.00) solid 1px; */
+	margin-top: 30px;
 }
 
 h3{
@@ -505,5 +510,6 @@ box-shadow: none;
 	width:150px;
 }
 .descripcion TEXTAREA {
-	color: #000000;
+	color: #FFF;
+	background-color: transparent;
 }
