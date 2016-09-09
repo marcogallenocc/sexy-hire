@@ -198,13 +198,20 @@ app.get('/crear-book',function(req,res){
 });
 
 app.post('/crear-book', function(req, res){
-
-		/***
-		var imgArr = req.body.selector_imgs;
-
-		res.send(imgArr);
-		***/
-		res.redirect("/acerca-de-ti");	
+	var db = firebase.database();		
+	var tabla = db.ref().child("users");
+	var imgArr = req.body.selector_imgs;	
+	
+	 //En firebase
+	tabla.child(req.cookies.uid).once('value', function(snapshot) {	
+		if(snapshot.val()){						
+			tabla.child(req.cookies.uid).child("Portafolio").set(imgArr);
+			res.redirect("/acerca-de-ti");			
+		}
+		else{
+			res.redirect("/login");
+		}
+	});
 });
 
 app.get('/acerca-de-ti',function(req,res){
@@ -212,17 +219,43 @@ app.get('/acerca-de-ti',function(req,res){
 });
 
 app.post('/acerca-de-ti',function(req,res){
-
-	/***
-	TODO: Agregar a la base de datos req.body.presentacion 
-	***/
-	//res.send(req.body.presentacion);
-	res.redirect('/confirma-datos');
-	//res.render('acerca_de_ti');
+	var db = firebase.database();		
+	var tabla = db.ref().child("users");
+	var presentacion = req.body.presentacion;	
+	
+	 //En firebase
+	tabla.child(req.cookies.uid).once('value', function(snapshot) {	
+		if(snapshot.val()){		
+			var objUser = {"Presentacion": presentacion};
+			tabla.child(req.cookies.uid).update(objUser);
+			res.redirect('/confirma-datos');			
+		}
+		else{
+			res.redirect("/login");
+		}
+	});
 });
 
 app.get('/confirma-datos',function(req,res){
-	res.render('confirma_datos', {usuario: getUserParams(req,res)});
+	var db = firebase.database();		
+	var tabla = db.ref().child("users");
+	var datos;
+	
+	 //En firebase
+	tabla.child(req.cookies.uid).once('value', function(snapshot) {	
+		if(snapshot.val()){	
+			//tabla.child(req.cookies.uid).child("Portafolio").once('value', function(photos) {
+				datos = {"Nombre": req.cookies.user, "Presentacion":snapshot.val().Presentacion, 
+				"FotoPerfil":snapshot.val().FotoPerfil, "Portafolio": snapshot.val().Portafolio} //"Portafolio": {photos.val()}
+			//}
+			res.render('confirma_datos', {usuario: getUserParams(req,res),dato: datos});
+		}
+		else{
+			res.redirect("/login");
+		}
+	});
+	
+	//res.render('confirma_datos', {usuario: getUserParams(req,res),dato: datos});
 });
 
 app.post('/confirma-datos',function(req,res){
