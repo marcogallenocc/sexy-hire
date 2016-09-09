@@ -4,7 +4,7 @@
   "description": "Sexy hire hackatocc project",
   "main": "sexy-hire.js",
   "scripts": {
-    "start": "node sexy-hire.js",    
+    "start": "node sexy-hire.js"    
   },
   "repository": {
     "type": "git",
