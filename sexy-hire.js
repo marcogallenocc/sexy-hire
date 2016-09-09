@@ -227,7 +227,7 @@ app.post('/confirma-datos',function(req,res){
 app.get('/portafolio/:uid', function(req, res){
 	var uid = req.params.uid;
 	
-	res.render('portafolio', {layout:'portf'});
+	res.render('portafolio', {usuario: getUserParams(req,res)}, {layout:'portf'});
 });
 
 //INSTAGRAM AUTH USER & GET TOKEN 
