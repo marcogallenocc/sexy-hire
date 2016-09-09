@@ -1,10 +1,72 @@
-<h1>Selector</h1>
+<h1>Elige tu profesión</h1>
 
 <form method="POST" action="/selector">
+	<div id="cmiscelaneos">
+       <div class="fotoperfil">
+   <img src="svg/perfil.svg" alt="perfil" />
+   </div>
+   <h2>Hola (Nombre de usuario) </h2>
+   <h2>Elige tu actividad</h2>
+<div class="selector">
+<label>
+ <input type="checkbox">
+ <span></span>
+ Fotografo
+</label>
+</div>
+<div class="selector">
+<label>
+<input type="radio" name="selector" value="Modelo" />
+ <span></span>
+ Modelo
+</label>
+</div>
+<div class="selector">
+<label>
+ <input type="checkbox">
+ <span></span>
+ Maquillista
+</label>
+</div>
+
+<div class="selector">
+<label>
+ <input type="checkbox">
+ <span></span>
+ Edecán/Gio
+</label>
+</div>
+
+<input type="submit" class="btn-continuar" value="Continuar" />
+
+
+
+   </div>
 	<input type="radio" name="selector" value="Modelo" /><label>Modelo</label>
 	<input type="radio" name="selector" value="Edecan / Gio" /><label>Edecan / Gio</label>
 	<input type="radio" name="selector" value="Fotografo" /><label>Fotografo</label>
 	<input type="radio" name="selector" value="Maquillista / Estilísta" /><label>Maquillista / Estilísta</label>
 
 	<input type="submit" value="Continuar" />
+
+	<script type="text/javascript">
+	// the selector will match all input controls of type :checkbox
+// and attach a click event handler 
+$("input:checkbox").on('click', function() {
+ // in the handler, 'this' refers to the box clicked on
+ var $box = $(this);
+ if ($box.is(":checked")) {
+   // the name of the box is retrieved using the .attr() method
+   // as it is assumed and expected to be immutable
+   var group = "input:checkbox[name='" + $box.attr("name") + "']";
+   // the checked state of the group/box on the other hand will change
+   // and the current value is retrieved using .prop() method
+   $(group).prop("checked", false);
+   $box.prop("checked", true);
+ } else {
+   $box.prop("checked", false);
+ }
+});
+
+	</script>
 </form>

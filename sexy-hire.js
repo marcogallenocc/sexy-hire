@@ -3,6 +3,9 @@
 var express = require('express');
 var request = require('request');
 var ig = require('instagram-node').instagram();
+var credentials = require('./credentials.js');
+
+
 var handlebars = require('express-handlebars').create({defaultLayout:'main',
 	helpers: {
 		section: function(name, options){
@@ -32,8 +35,7 @@ var fbaseconfig = {
   };
 firebase.initializeApp(fbaseconfig);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extend: true}));
+
 //Sistema de templates
 app.engine('handlebars', handlebars.engine);
 
@@ -58,13 +60,8 @@ exports.handleauth = function(req,res){
 			res.send("Fuckity fuckity foo");
 		} else {
 			console.log(result.access_token);
-			var url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + result.access_token;
-
-		    request(url, function(err, response, body){
-		        var imgs = JSON.parse(body);
-		        var data = imgs.data;
-		        res.render('insta_conectado', {datum: data});
-		    });
+			var inst_access_token =res.cookie('int_at', result.access_token, {signed: true});
+			res.redirect('/crear-book');
 		}
 	});
 };
@@ -102,9 +99,32 @@ exports.handleAuthorize500px = function(req,res){
 		});
 }
 
+//USER ABSTRACT
+
+function getUserParams(req,res){
+	var user = {
+		id:124,
+		name: req.cookies.user
+	};
+
+	return user;
+}
+
+
+app.use(function(req,res,next){
+	console.log('processing request for"' + req.url + '"...');
+	next();
+});
 /*** ROUTING ***/
 //Ruta de archivos estaticos
+//app.use(express.static("/public", __dirname + 'public'));
+
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({extend: true}));
+
+app.use(require('cookie-parser')(credentials.cookieSecret));
 
 app.get('/',function(req,res){
 	res.render('index');
@@ -124,35 +144,59 @@ app.get('/validate',function(req,res){
 	 //En firebase
 	usuario.child(uid).once('value', function(snapshot) {	
 		if(snapshot.val().UserId){
-			//console.log(snapshot.val().UserId);
-			return res.redirect('/portafolio/'+ uid); // + uid
+			res.cookie('user',user);
+			return res.redirect('/portafolio/'+ uid);
 		}
 		else{
 			var objUser = {UserId: uid, Nombre: user};			
 			usuario.child(uid).set(objUser);
-			return res.redirect('/selector/'+ uid); //+ uid
-		}		
-		//res.send(snapshot);
+			res.cookie('user',user);
+			return res.redirect('/selector/'+ uid);
+		}				
 	});	
-	//res.send("validado hijo de la morning");
 });
 
 app.get('/selector',function(req,res){
-	res.render('selector');
+	
+
+	
+	res.render('selector',{usuario: getUserParams(req,res)});
 });
 
 app.post('/selector',function(req,res){
 
-	res.send(req.body);
+	//res.send(req.body);
+	res.redirect('crear-book');
 	
 });
 
 app.get('/crear-book',function(req,res){
-	res.render('crear_book');
+
+	var ins_atoken = req.signedCookies.int_at;
+
+
+	if(ins_atoken) {
+		var url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + ins_atoken;
+
+		    request(url, function(err, response, body){
+		        var imgs = JSON.parse(body);
+		        var data = imgs.data;
+		        res.render('crear_book', {datum: data, usuario: getUserParams(req,res)});
+		    });
+	}else {
+		res.render('crear_book');	
+	}
+	
+});
+
+app.post('/crear-book', function(res, req){
+		var imgArr = req.body.selector_imgs;
+
+		res.send(imgArr);
 });
 
 app.get('/acerca-de-ti',function(req,res){
-	res.render('acerca_de_ti');
+	res.render('acerca_de_ti', {usuario: getUserParams(req,res)});
 });
 
 app.post('/acerca-de-ti',function(req,res){
@@ -166,9 +210,18 @@ app.post('/acerca-de-ti',function(req,res){
 });
 
 app.get('/confirma-datos',function(req,res){
-	res.render('confirma_datos');
+	res.render('confirma_datos', {usuario: getUserParams(req,res)});
 });
 
+app.post('/confirma-datos',function(req,res){
+	res.redirect('/portafolio/*');
+});
+
+app.get('/portafolio/:uid', function(req, res){
+	var uid = req.params.uid;
+	
+	res.render('portafolio');
+});
 
 //INSTAGRAM AUTH USER & GET TOKEN 
 app.get('/authorize_user', exports.authorize_user);
@@ -179,7 +232,6 @@ app.get('/handleauth', exports.handleauth);
 //app.get('/authorize-500px', exports.authorize500px);
 
 //app.get('/handleAuthorize500px', exports.handleAuthorize500px);
-
 
 app.get('/logout',function(req,res){
 	fbase.auth().signOut().then(function() {

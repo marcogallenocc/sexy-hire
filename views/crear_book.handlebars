@@ -1,12 +1,37 @@
 <h1>Crear Book</h1>
 
+<div id="cmiscelaneos">
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-10">
+		
+  
+
+		{{#unless datum}}
 		<a href="/authorize_user"><img src="/img/instagram_logo.jpg" alt="Instagram" style="width:150px; height:auto" /></a>
+		{{else}}
+			<form action="/crear-book" method="POST" >
+			<select multiple="multiple" id="selector_imgs" name="selector_imgs" class="image-picker" >
+			{{#each datum}}
+			<option data-img-src="{{this.images.thumbnail.url}}" value="{{this.images.thumbnail.url}}">{{this.images.thumbnail.url}}</option>
+			  
+			{{/each}}
+			</select>
+			<input type="submit" class="btn" value="Continuar" />
+		</form>
+			<script type="text/javascript">
+				 $("#selector_imgs").imagepicker({
+		          hide_select : false,
+		          show_label  : false
+		        });
+
+			</script>
+		{{/unless}}
 	</div>
-	<div class="col-md-4">
+	<!--<div class="col-md-4">
 		<a href="/authorize-500px"><img src="/img/500px.png" alt="Instagram" style="width:150px; height:auto" /></a>
 
-	</div>
-	<div class="col-md-">Flikr</div>
+	</div>-->
+	<div class="col-md-2">Flikr</div>
+</div>
+
 </div>
