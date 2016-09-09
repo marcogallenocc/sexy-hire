@@ -10,6 +10,7 @@
 <form id="validate" action="/validate">
 	<input type="hidden" id="h_user" name="h_user" value="">
 	<input type="hidden" id="h_uid" name="h_uid" value="">
+	<input type="hidden" id="h_photo" name="h_photo" value="">
 </form>
 </div>
 
@@ -25,9 +26,10 @@
 		  var token = result.credential.accessToken;		  
 		  // The signed-in user info.
 		  user = result.user;
-		  console.log(user);
+		  //console.log(user);
 		  $("#h_user").val(user.displayName);
 		  $("#h_uid").val(user.uid);
+		  $("#h_photo").val(user.photoURL);
 		  $("#validate").submit();
 					  
 		}).catch(function(error) {
