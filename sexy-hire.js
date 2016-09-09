@@ -173,8 +173,8 @@ app.get('/selector',function(req,res){
 
 app.post('/selector',function(req,res){
 
-	//res.send(req.body);
-	res.redirect('crear-book');
+	res.send(req.body.selector);
+	//res.redirect('crear-book');
 	
 });
 
@@ -199,12 +199,12 @@ app.get('/crear-book',function(req,res){
 
 app.post('/crear-book', function(req, res){
 
-		/***
+		
 		var imgArr = req.body.selector_imgs;
 
 		res.send(imgArr);
-		***/
-		res.redirect("/acerca-de-ti");	
+		
+		//res.redirect("/acerca-de-ti");	
 });
 
 app.get('/acerca-de-ti',function(req,res){
@@ -217,8 +217,8 @@ app.post('/acerca-de-ti',function(req,res){
 	TODO: Agregar a la base de datos req.body.presentacion 
 	***/
 	//res.send(req.body.presentacion);
-	res.redirect('/confirma-datos');
-	//res.render('acerca_de_ti');
+	//res.redirect('/confirma-datos');
+	res.render('acerca_de_ti');
 });
 
 app.get('/confirma-datos',function(req,res){
@@ -231,8 +231,9 @@ app.post('/confirma-datos',function(req,res){
 
 app.get('/portafolio/:uid', function(req, res){
 	var uid = req.params.uid;
+
 	
-	res.render('portafolio', {usuario: getUserParams(req,res)}, {layout:'portf'});
+	res.render('portafolio', {usuario: getUserParams(req,res), layout:'portf'});
 });
 
 //INSTAGRAM AUTH USER & GET TOKEN 

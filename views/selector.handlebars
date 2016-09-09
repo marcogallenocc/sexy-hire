@@ -7,66 +7,35 @@
    </div>
    <h2>Hola {{usuario.name}} </h2>
    <h2>Elige tu actividad</h2>
-<div class="selector">
-<label>
- <input type="checkbox">
- <span></span>
- Fotografo
-</label>
-</div>
-<div class="selector">
-<label>
-<input type="radio" name="selector" value="Modelo" />
- <span></span>
- Modelo
-</label>
-</div>
-<div class="selector">
-<label>
- <input type="checkbox">
- <span></span>
- Maquillista
-</label>
-</div>
 
-<div class="selector">
-<label>
- <input type="radio" name="selector" value="Edecan / Gio" />
- <span></span>
- Edecán/Gio
-</label>
-</div>
+<!--<div class="btn-group selector" id="radio-selector" >
+   <form method="POST" action="/selector">
+  <label class="btn active">
+    <input type="radio" name='selector' value="modelo" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span>Modelo</span>
+  </label>
+  <label class="btn">
+    <input type="radio" name='selector' value="edecan/gio" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span>Edecan / Gio</span>
+  </label>
+   <label class="btn">
+    <input type="radio" name='selector' value="fotografo" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span>Fotografo</span>
+  </label>
+   <label class="btn">
+    <input type="radio" name='selector' value="maquillista/estilista" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span>Maquillista / Estilista</span>
+  </label>
 
-<input type="submit" class="btn-continuar" value="Continuar" />
-
-
-
-   </div>
-	<input type="radio" name="selector" value="Modelo" /><label>Modelo</label>
-	<input type="radio" name="selector" value="Edecan / Gio" /><label>Edecan / Gio</label>
-	<input type="radio" name="selector" value="Fotografo" /><label>Fotografo</label>
-	<input type="radio" name="selector" value="Maquillista / Estilísta" /><label>Maquillista / Estilísta</label>
-
-	<input type="submit" value="Continuar" />
-
-	<script type="text/javascript">
-	// the selector will match all input controls of type :checkbox
-// and attach a click event handler 
-$("input:checkbox").on('click', function() {
- // in the handler, 'this' refers to the box clicked on
- var $box = $(this);
- if ($box.is(":checked")) {
-   // the name of the box is retrieved using the .attr() method
-   // as it is assumed and expected to be immutable
-   var group = "input:checkbox[name='" + $box.attr("name") + "']";
-   // the checked state of the group/box on the other hand will change
-   // and the current value is retrieved using .prop() method
-   $(group).prop("checked", false);
-   $box.prop("checked", true);
- } else {
-   $box.prop("checked", false);
- }
-});
-
-	</script>
+   <input type="submit" value="Continuar" />
 </form>
+</div>
+   </div>-->
+
+   <div class="btn-group" id="radio-selector" >
+   <form method="POST" action="/selector">
+	<label class="btn active"><input type="radio" name="selector" value="modelo" />Modelo</label>
+	<label class="btn"><input type="radio" name="selector" value="edecan/gio" />Edecan / Gio</label>
+	<label class="btn"><input type="radio" name="selector" value="fotografo" />Fotografo</label>
+	<label class="btn"><input type="radio" name="selector" value="maquillista/estilísta" />Maquillista / Estilísta</label>
+
+	<input type="submit"  class="btn-continuar" value="Continuar" />
+   </form>
+</div>
+</div>
