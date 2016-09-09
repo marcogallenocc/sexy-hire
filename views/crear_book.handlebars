@@ -10,7 +10,7 @@
 		<a href="/authorize_user"><img src="/img/instagram_logo.jpg" alt="Instagram" style="width:150px; height:auto" /></a>
 		{{else}}
 			<form action="/crear-book" method="POST" >
-			<select multiple="multiple" id="selector_imgs" name="selector_imgs" class="image-picker" >
+			<select multiple="multiple" name="selector_imgs" id="selector_imgs" class="image-picker" >
 			{{#each datum}}
 			<option data-img-src="{{this.images.thumbnail.url}}" value="{{this.images.thumbnail.url}}">{{this.images.thumbnail.url}}</option>
 			  
@@ -19,7 +19,7 @@
 			<input type="submit" class="btn" value="Continuar" />
 		</form>
 			<script type="text/javascript">
-				 $("#selector_imgs").imagepicker({
+				 $("select").imagepicker({
 		          hide_select : false,
 		          show_label  : false
 		        });

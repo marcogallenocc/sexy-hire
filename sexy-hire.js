@@ -3,6 +3,8 @@
 var express = require('express');
 var request = require('request');
 var ig = require('instagram-node').instagram();
+
+var bodyParser = require('body-parser')
 var credentials = require('./credentials.js');
 
 
@@ -15,7 +17,7 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main',
 		}
 	}
 });
-var bodyParser = require('body-parser');
+;
 
 //var Api500px = require('api_500px');
 
@@ -120,6 +122,7 @@ app.use(function(req,res,next){
 //app.use(express.static("/public", __dirname + 'public'));
 
 app.use(express.static(__dirname + '/public'));
+
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extend: true}));
@@ -143,7 +146,7 @@ app.get('/validate',function(req,res){
 	
 	 //En firebase
 	usuario.child(uid).once('value', function(snapshot) {	
-		if(snapshot.val().UserId){
+		if(snapshot.val()){
 			res.cookie('user',user);
 			return res.redirect('/portafolio/'+ uid);
 		}
@@ -151,7 +154,7 @@ app.get('/validate',function(req,res){
 			var objUser = {UserId: uid, Nombre: user};			
 			usuario.child(uid).set(objUser);
 			res.cookie('user',user);
-			return res.redirect('/selector/'+ uid);
+			return res.redirect('/selector');
 		}				
 	});	
 });
@@ -189,10 +192,14 @@ app.get('/crear-book',function(req,res){
 	
 });
 
-app.post('/crear-book', function(res, req){
+app.post('/crear-book', function(req, res){
+
+		/***
 		var imgArr = req.body.selector_imgs;
 
 		res.send(imgArr);
+		***/
+		res.redirect("/acerca-de-ti");	
 });
 
 app.get('/acerca-de-ti',function(req,res){
@@ -220,7 +227,7 @@ app.post('/confirma-datos',function(req,res){
 app.get('/portafolio/:uid', function(req, res){
 	var uid = req.params.uid;
 	
-	res.render('portafolio');
+	res.render('portafolio', {layout:'portf'});
 });
 
 //INSTAGRAM AUTH USER & GET TOKEN 
