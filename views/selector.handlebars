@@ -3,9 +3,9 @@
 <form method="POST" action="/selector">
 	<div id="cmiscelaneos">
        <div class="fotoperfil">
-   <img src="svg/perfil.svg" alt="perfil" />
+   <img src="{{usuario.photo}}" alt="perfil" />
    </div>
-   <h2>Hola (Nombre de usuario) </h2>
+   <h2>Hola {{usuario.name}} </h2>
    <h2>Elige tu actividad</h2>
 <div class="selector">
 <label>

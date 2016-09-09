@@ -103,8 +103,9 @@ exports.handleAuthorize500px = function(req,res){
 
 function getUserParams(req,res){
 	var user = {
-		id:124,
-		name: req.cookies.user
+		id: req.cookies.uid,
+		name: req.cookies.user,
+		photo: req.cookies.photo
 	};
 
 	return user;
@@ -137,29 +138,33 @@ app.get('/login',function(req,res){
 
 app.get('/validate',function(req,res){
 	var user = req.param('h_user');
-	var uid = req.param('h_uid');	
+	var uid = req.param('h_uid');
+	var photo = req.param('h_photo');
 	var db = firebase.database();		
 	var usuario = db.ref().child("users");
 	
 	 //En firebase
 	usuario.child(uid).once('value', function(snapshot) {	
-		if(snapshot.val().UserId){
+		if(snapshot.val()){			
+			res.cookie('uid',uid);
 			res.cookie('user',user);
+			res.cookie('photo',photo);
 			return res.redirect('/portafolio/'+ uid);
 		}
 		else{
-			var objUser = {UserId: uid, Nombre: user};			
+			var objUser = {"UserId": uid, "Nombre": user, "FotoPerfil": photo};
+			console.log(objUser);
 			usuario.child(uid).set(objUser);
+			res.cookie('uid',uid);
 			res.cookie('user',user);
-			return res.redirect('/selector/'+ uid);
+			res.cookie('photo',photo);
+			return res.redirect('/selector');
 		}				
 	});	
 });
 
 app.get('/selector',function(req,res){
-	
-
-	
+		
 	res.render('selector',{usuario: getUserParams(req,res)});
 });
 
