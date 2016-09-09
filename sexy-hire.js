@@ -172,10 +172,21 @@ app.get('/selector',function(req,res){
 });
 
 app.post('/selector',function(req,res){
-
-	//res.send(req.body.selector);
-	res.redirect('crear-book');
+	var db = firebase.database();		
+	var tabla = db.ref().child("users");
+	var selector = req.body.selector;	
 	
+	 //En firebase
+	tabla.child(req.cookies.uid).once('value', function(snapshot) {	
+		if(snapshot.val()){		
+			var objUser = {"Tipo": selector};
+			tabla.child(req.cookies.uid).update(objUser);
+			res.redirect('/crear-book');			
+		}
+		else{
+			res.redirect("/login");
+		}
+	});	
 });
 
 app.get('/crear-book',function(req,res){
