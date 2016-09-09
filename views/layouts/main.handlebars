@@ -11,15 +11,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
         <style>
             body {
                 padding-top: 50px;
                 padding-bottom: 20px;
             }
         </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+       
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/image-picker.css">
         <script src="https://www.gstatic.com/firebasejs/3.3.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.3.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.3.1/firebase-database.js"></script>
@@ -44,6 +45,8 @@
         <script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/main.js"></script>
+        <script src="js/image-picker.min.js"></script>
+        
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -62,29 +65,41 @@
     
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Y SI LO PONES...TU?</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul>
-              <li><a href="/logout">Salir</a></li>
-              <li><a href="/crear-book">Book</a></li>
-          </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+    <div class="container">
+      <nav class="navbar navbar-default">
+ <div class="container-fluid"> 
+   <!-- Brand and toggle get grouped for better mobile display -->
+   <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+     <a class="navbar-brand" href="/"><img src="img/logo.png" alt="logo" /></a></div>
+   <!-- Collect the nav links, forms, and other content for toggling -->
+   <div class="collapse navbar-collapse" id="defaultNavbar1">
+     <ul class="nav navbar-nav">
+       <li><a href="#">TALENTO</a></li>
+       <li><a href="#">FOTOGRAFÍA</a></li>
+       <li><a href="#">DISEÑO DE IMAGEN</a></li>
+     </ul>
+     <form class="navbar-form navbar-left" role="search">
+       <div class="form-group">
+         <input type="text" class="form-control" placeholder="Search">
+       </div>
+       <button type="submit" class="btn btn-default">Buscar</button>
+     </form>
+     <ul class="nav navbar-nav navbar-right">
+        {{#unless usuario}}
+           <a href="/login"><li class="btn-sube">Sube TU BOOK</li></a>
+        {{else}}
+           <a href="/portafolio/{{usuario.id}}">{{usuario.name}}</a>
+        {{/unless}}
+     </ul>
+   </div>
+   <!-- /.navbar-collapse --> 
+ </div>
+ <!-- /.container-fluid --> 
+</nav>
     
 
-    <div class="container">
+    
       {{{body}}}
 
       <hr>

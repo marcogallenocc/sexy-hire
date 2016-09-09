@@ -1,10 +1,17 @@
 <h1>Login</h1>
-<p>Logueate chingon con Facebook Index modificado</p>
-<button id="fb_login" class="btn success">Logueate mi rey con Facebook</button>
+
+
+<div id="cmiscelaneos">
+   <div class="fotoperfil">
+   <img src="svg/perfil.svg" class="fb_img" alt="perfil" />
+   </div>
+   <button id="fb_login" class="btn-face">Inicia sesión con facebook</button>
+   </div>
 <form id="validate" action="/validate">
 	<input type="hidden" id="h_user" name="h_user" value="">
 	<input type="hidden" id="h_uid" name="h_uid" value="">
 </form>
+</div>
 
 <script type="text/javascript">
 	var provider = new firebase.auth.FacebookAuthProvider();
