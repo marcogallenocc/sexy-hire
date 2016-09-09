@@ -267,10 +267,25 @@ app.post('/confirma-datos',function(req,res){
 });
 
 app.get('/portafolio/:uid', function(req, res){
-	var uid = req.params.uid;
-
+	var db = firebase.database();		
+	var tabla = db.ref().child("users");
+	var datos;
 	
-	res.render('portafolio', {usuario: getUserParams(req,res), layout:'portf'});
+	 //En firebase
+	tabla.child(req.cookies.uid).once('value', function(snapshot) {	
+		if(snapshot.val()){	
+			//tabla.child(req.cookies.uid).child("Portafolio").once('value', function(photos) {
+				datos = {"Nombre": req.cookies.user, "Presentacion":snapshot.val().Presentacion, 
+				"FotoPerfil":snapshot.val().FotoPerfil, "Portafolio": snapshot.val().Portafolio} //"Portafolio": {photos.val()}
+			//}
+			res.render('portafolio', {usuario: getUserParams(req,res),dato: datos, layout:'portf'});
+			//res.render('confirma_datos', {usuario: getUserParams(req,res),dato: datos});
+		}
+		else{
+			res.redirect("/login");
+		}
+	});
+	
 });
 
 //INSTAGRAM AUTH USER & GET TOKEN 

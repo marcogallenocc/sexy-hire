@@ -456,3 +456,7 @@ color: #7AA3CC;
 -webkit-box-shadow: none;
 box-shadow: none;
 }
+
+#cmiscelaneos .portafolio_img img {
+	border-radius:0 !important;
+}
