@@ -1,21 +1,46 @@
 <h1>Portafolio de {{dato.Nombre}}</h1>
 
-<div id="cmiscelaneos">
-  <div class="fotoperfil">
+
+<div class="book">
+	<div class="perfilbook">
+  <div class ="row">
+  	<div class="col-md-4">
+  		 <h2>Mi book</h2>
+  	<div class="fotoperfil">
   <img src="{{dato.FotoPerfil}}" alt="perfil" />
   </div>
-  <h2>Confirma tus datos</h2>
-  <div class="sbook"> 
-<div class="resultado">{{dato.Nombre}}</div>
-<div class="resultado">{{dato.Presentacion}}</div>
-
-<div class="portafolio_img">
-
-	{{#each dato.Portafolio}}
-			<img src="{{.}}" />
-			  
-	{{/each}}
+  <h2>{{datos-Nombre}}</h2>
+  <div class="sobreti">
+ {{dato.Presentacion}}
+  </div>
 </div>
+<div class="col-md-8">
+	<div class="fotosbook">
+  <div class="descripcion">
+{{#each dato.Portafolio}}
+	<img src="{{.}}" />
+	  
+{{/each}}
+  
+  </div>
+  </div>
 </div>
 
-<a class="btn-continuar">Listo!</a>
+  </div>
+  
+</div>
+
+
+
+ 
+  
+  
+  
+  </div>
+  
+  
+  
+     
+    <div class="perfilbook">
+      <div class="btn-editar">Editar</div>
+    </div>
