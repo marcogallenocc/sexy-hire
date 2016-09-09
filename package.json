@@ -32,6 +32,10 @@
     "instagram-node": "^0.5.8",
     "mocha": "^3.0.2",
     "multer": "^1.2.0"
+  }  ,
+    "engines": {
+     "node": "4.5.0",
+     "npm": "2.15.9"
   }
 }
 
