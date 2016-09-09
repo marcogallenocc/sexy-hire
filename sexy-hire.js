@@ -260,7 +260,7 @@ app.get('/confirma-datos',function(req,res){
 	tabla.child(req.cookies.uid).once('value', function(snapshot) {	
 		if(snapshot.val()){	
 			//tabla.child(req.cookies.uid).child("Portafolio").once('value', function(photos) {
-				datos = {"Nombre": req.cookies.user, "Presentacion":snapshot.val().Presentacion, 
+				datos = {"UserId":req.cookies.uid, "Nombre": req.cookies.user, "Presentacion":snapshot.val().Presentacion, 
 				"FotoPerfil":snapshot.val().FotoPerfil, "Portafolio": snapshot.val().Portafolio} //"Portafolio": {photos.val()}
 			//}
 			res.render('confirma_datos', {usuario: getUserParams(req,res),dato: datos});
