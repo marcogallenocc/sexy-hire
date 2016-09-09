@@ -14,13 +14,13 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main',
 });
 var bodyParser = require('body-parser');
 
-var Api500px = require('api_500px');
+//var Api500px = require('api_500px');
 
-var api = new Api500px ({
-      key: 'TvxvhnxFeDoHLwtYVRytzLunjbJLTqljIY2MJs4F',
-      secret: 'YHfIWM99itAaJaOrnXnyPYJy1AiQL5kHxcPOIIvJ',
-      callback: 'http://localhost/handleAuthorize500px'
-    });
+//var api = new Api500px ({
+//     key: 'TvxvhnxFeDoHLwtYVRytzLunjbJLTqljIY2MJs4F',
+//      secret: 'YHfIWM99itAaJaOrnXnyPYJy1AiQL5kHxcPOIIvJ',
+//      callback: 'http://localhost/handleAuthorize500px'
+//    });
 
 var app = express();
 var firebase = require('firebase');
@@ -30,7 +30,7 @@ var fbaseconfig = {
     databaseURL: "https://sexy-hire.firebaseio.com",
     storageBucket: "sexy-hire.appspot.com",
   };
-var fbase = firebase.initializeApp(fbaseconfig);
+firebase.initializeApp(fbaseconfig);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extend: true}));
@@ -118,29 +118,23 @@ app.get('/login',function(req,res){
 app.get('/validate',function(req,res){
 	var user = req.param('h_user');
 	var uid = req.param('h_uid');	
-	var ref = new firebase("https://sexy-hire.firebaseio.com");
-	var db = ref.database();	
-	
-	var usuario = db.child("users");
+	var db = firebase.database();		
+	var usuario = db.ref().child("users");
 	
 	 //En firebase
-	usuario(uid).once('value', function(snapshot) {
-		console.log(snapshot.val());
-	});
-	//console.log(usuario);
-	//res.send(usuario);
-	//fbase.auth().onAuthStateChanged(function(user) {
-	//	if (user) {
-	//	uid = user.Id;
-	//	console.log("user: " + uid);
-	//	window.location.href= "/crear_book"
-	//	} else {
-	//	console.log("user: " + uid);
-	//	console.log('No estas logueado');
-	//	window.location.href= "/"
-	//	}
-	//});		
-	res.send("validado hijo de la morning");
+	usuario.child(uid).once('value', function(snapshot) {	
+		if(snapshot.val().UserId){
+			//console.log(snapshot.val().UserId);
+			return res.redirect('/portafolio/'+ uid); // + uid
+		}
+		else{
+			var objUser = {UserId: uid, Nombre: user};			
+			usuario.child(uid).set(objUser);
+			return res.redirect('/selector/'+ uid); //+ uid
+		}		
+		//res.send(snapshot);
+	});	
+	//res.send("validado hijo de la morning");
 });
 
 app.get('/selector',function(req,res){
@@ -182,9 +176,9 @@ app.get('/authorize_user', exports.authorize_user);
 app.get('/handleauth', exports.handleauth);
 
 /// 500PX URLS
-app.get('/authorize-500px', exports.authorize500px);
+//app.get('/authorize-500px', exports.authorize500px);
 
-app.get('/handleAuthorize500px', exports.handleAuthorize500px);
+//app.get('/handleAuthorize500px', exports.handleAuthorize500px);
 
 
 app.get('/logout',function(req,res){
