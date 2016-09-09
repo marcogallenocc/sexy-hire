@@ -49,7 +49,8 @@ app.set('view engine','handlebars');
 ig.use({access_token:"TBD"});
 ig.use({client_id: '19dbcc28737143d18193f0c2a312ebc1', client_secret:'302665a7671f4c67ac873bf85e1831d7'});
 
-var redirect_uri = 'http://localhost/handleauth';
+//var redirect_uri = 'http://localhost/handleauth';
+var redirect_uri = 'https://sexy-hire.herokuapp.com/handleauth';
 
 exports.authorize_user = function(req, res){
 	res.redirect(ig.get_authorization_url(redirect_uri));
